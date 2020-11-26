@@ -3,8 +3,7 @@ pipeline {
   stages {
     stage('error') {
       steps {
-        sh '''#!/bin/bash
-echo "this is test"'''
+        sh 'echo "this is test"'
       }
     }
 
