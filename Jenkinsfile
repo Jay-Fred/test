@@ -8,9 +8,9 @@ cat Jenkinsfile'''
       }
     }
 
-    stage('') {
+    stage('write_file') {
       steps {
-        readFile(file: 'Jenkinsfile', encoding: 'UTF-8')
+        writeFile(file: 'new_test', text: 'this is second file', encoding: 'UTF-8')
       }
     }
 
