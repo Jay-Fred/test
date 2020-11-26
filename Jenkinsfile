@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('error') {
       steps {
-        sh 'mvn test'
+        sh 'sh test.sh'
       }
     }
 
