@@ -1,12 +1,9 @@
 pipeline {
   agent none
   stages {
-    stage('') {
+    stage('error') {
       steps {
-        sh '''#!/bin/bash
-git clone git@github.com:Jay-Fred/test.git
-cd test
-sh test.sh'''
+        sh 'git clone git@github.com:Jay-Fred/test.git'
       }
     }
 
