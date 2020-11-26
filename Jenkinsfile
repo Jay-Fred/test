@@ -1,14 +1,10 @@
 pipeline {
-  agent {
-    node {
-      label 'test'
-    }
-
-  }
+  agent any
   stages {
-    stage('error') {
+    stage('exec shell') {
       steps {
-        sh 'sh test.sh'
+        sh '''sh test.sh
+cat Jenkinsfile'''
       }
     }
 
