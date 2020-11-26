@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('error') {
       steps {
-        sh 'git clone git@github.com:Jay-Fred/test.git'
+        git(url: 'git@github.com:Jay-Fred/test.git', branch: 'master', poll: true, changelog: true)
       }
     }
 
