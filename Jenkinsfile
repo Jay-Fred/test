@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('error') {
       steps {
-        git(url: 'git@github.com:Jay-Fred/test.git', branch: 'master', poll: true, changelog: true)
+        sh '''#!/bin/bash
+echo "this is test"'''
       }
     }
 
