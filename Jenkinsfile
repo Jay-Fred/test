@@ -14,5 +14,11 @@ cat Jenkinsfile'''
       }
     }
 
+    stage('ehco_newfile') {
+      steps {
+        sh 'cat new_test'
+      }
+    }
+
   }
 }
