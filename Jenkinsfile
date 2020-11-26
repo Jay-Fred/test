@@ -16,9 +16,9 @@ cat Jenkinsfile'''
           }
         }
 
-        stage('') {
+        stage('error') {
           steps {
-            sh 'sed -i \'s#test#uuuuuuuuuuu#g\' test.sh'
+            sh 'sed -i \'s#second#uuuuuuuuuuu#g\' new_test'
           }
         }
 
@@ -28,7 +28,6 @@ cat Jenkinsfile'''
     stage('ehco_newfile') {
       steps {
         sh '''cat new_test
-echo -e "\\n"
 cat test.sh'''
       }
     }
