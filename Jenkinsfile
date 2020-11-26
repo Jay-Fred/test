@@ -8,5 +8,11 @@ cat Jenkinsfile'''
       }
     }
 
+    stage('') {
+      steps {
+        readFile(file: 'Jenkinsfile', encoding: 'UTF-8')
+      }
+    }
+
   }
 }
