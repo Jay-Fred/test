@@ -1,13 +1,13 @@
 pipeline {
   agent any
   stages {
-    stage('docker-build') {
+    stage('docker-build-v1') {
       steps {
         sh 'docker build -t redis:v1 .'
       }
     }
 
-    stage('docker-run') {
+    stage('docker-redis-v1') {
       steps {
         sh '''docker_redis=`docker ps -a | grep redisv1 | awk \'{print $1}\'`
 if [ -z $docker_redis ];then
@@ -16,11 +16,15 @@ fi'''
       }
     }
 
-    stage('Dockerfile') {
-      parallel {
-        stage('Dockerfile') {
-          steps {
-            sh '''mv rootfs.tar redis/ 
+    stage('docker-cp') {
+      steps {
+        sh 'docker cp redisv1:/rootfs.tar .'
+      }
+    }
+
+    stage('dockerfile') {
+      steps {
+        sh '''mv rootfs.tar redis/ 
 cat <<EOF>> ./redis/Dockerfile
 FROM scratch
 ADD rootfs.tar /
@@ -30,26 +34,17 @@ EXPOSE 6379
 ENTRYPOINT ["/usr/bin/redis-server"]
 CMD ["--port", "6379"]
 EOF'''
-          }
-        }
-
-        stage('docker-cp') {
-          steps {
-            sh 'docker cp redisv1:/rootfs.tar .'
-          }
-        }
-
       }
     }
 
-    stage('build-image') {
+    stage('docker-build-v2') {
       steps {
         sh '''docker build -t redis:v2 -f ./redis/Dockerfile .
 docker images'''
       }
     }
 
-    stage('') {
+    stage('docker-redis-v2') {
       steps {
         sh '''docker_redis=`docker ps -a | grep redisv1 | awk \'{print $1}\'`
 if [ -z $docker_redis ];then
