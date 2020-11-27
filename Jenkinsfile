@@ -18,7 +18,7 @@ fi'''
 
     stage('docker-cp') {
       steps {
-        sh 'docker cp redisv1:/rootfs.tar redis/'
+        sh 'docker cp redisv1:/rootfs.tar .'
       }
     }
 
