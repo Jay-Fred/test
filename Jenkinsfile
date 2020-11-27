@@ -12,8 +12,6 @@ pipeline {
         sh '''docker_redis=`docker ps -a | grep redisv1 | awk \'{print $1}\'`
 if [ -z $docker_redis ];then
   docker run -it -d --rm --name redisv1 redis:v1
-else
-  docker stop redisv1
 fi'''
       }
     }
