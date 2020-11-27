@@ -45,7 +45,7 @@ EOF'''
 
     stage('build-image') {
       steps {
-        sh '''docker build -t redis:v2 -f ./redis/Dockerfile
+        sh '''docker build -t redis:v2 -f ./redis/Dockerfile .
 docker images'''
       }
     }
