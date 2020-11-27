@@ -11,7 +11,13 @@ pipeline {
       parallel {
         stage('docker-run') {
           steps {
-            sh 'docker run -it -d --rm --name redisv1 redis:v1'
+            sh '''container=`docker pa -a -q`
+for i in $container
+  do
+    docker stop $i
+    docker rm $i
+  done
+docker run -it -d --rm --name redisv1 redis:v1'''
           }
         }
 
@@ -26,7 +32,7 @@ pipeline {
 
     stage('Dockerfile') {
       steps {
-        sh '''cat <<EOF>> redisfile
+        sh '''cat <<EOF>> ./redis/Dockerfile
 FROM scratch
 ADD rootfs.tar /
 WORKDIR /data
@@ -40,7 +46,7 @@ EOF'''
 
     stage('build-image') {
       steps {
-        sh '''docker build -t redis:v2 -f redisfile
+        sh '''docker build -t redis:v2 -f ./redis/Dockerfile
 docker images'''
       }
     }
