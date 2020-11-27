@@ -9,16 +9,9 @@ pipeline {
 
     stage('docker-run') {
       steps {
-        sh '''container=`docker ps -a -q`
-if [ $?==0 ];then
-  docker run -it -d --rm --name redisv1 redis:v1
-else
-  for i in $container
-    do
-      docker stop $i
-      docker rm $i
-    done
-fi
+        sh '''docker stop redisv1
+docker container rm redisv1
+docker run -it -d --rm --name redisv1 redis:v1
 '''
       }
     }
