@@ -11,13 +11,13 @@ pipeline {
       parallel {
         stage('docker-run') {
           steps {
-            sh 'docker run redis:v1'
+            sh 'docker run -it -d --rm --name redisv1 redis:v1'
           }
         }
 
         stage('docker-cp') {
           steps {
-            sh 'docker cp redis:v1:/rootfs.tar .'
+            sh 'docker cp redisv1:/rootfs.tar .'
           }
         }
 
@@ -38,7 +38,7 @@ EOF'''
       }
     }
 
-    stage('') {
+    stage('build-image') {
       steps {
         sh '''docker build -t redis:v2 -f redisfile
 docker images'''
