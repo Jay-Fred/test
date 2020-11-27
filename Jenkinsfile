@@ -11,7 +11,7 @@ pipeline {
       parallel {
         stage('docker-run') {
           steps {
-            sh '''container=`docker pa -a -q`
+            sh '''container=`docker ps -a -q`
 for i in $container
   do
     docker stop $i
