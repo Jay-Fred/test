@@ -18,14 +18,13 @@ fi'''
 
     stage('docker-cp') {
       steps {
-        sh 'docker cp redisv1:/rootfs.tar .'
+        sh 'docker cp redisv1:/rootfs.tar redis/'
       }
     }
 
     stage('dockerfile') {
       steps {
-        sh '''mv rootfs.tar redis/ 
-cat <<EOF>> ./redis/Dockerfile
+        sh '''cat <<EOF>> ./redis/Dockerfile
 FROM scratch
 ADD rootfs.tar /
 WORKDIR /data
