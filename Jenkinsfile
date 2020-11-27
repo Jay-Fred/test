@@ -20,7 +20,8 @@ fi'''
       parallel {
         stage('Dockerfile') {
           steps {
-            sh '''cat <<EOF>> ./redis/Dockerfile
+            sh '''mv rootfs.tar redis/ 
+cat <<EOF>> ./redis/Dockerfile
 FROM scratch
 ADD rootfs.tar /
 WORKDIR /data
@@ -45,6 +46,18 @@ EOF'''
       steps {
         sh '''docker build -t redis:v2 -f ./redis/Dockerfile .
 docker images'''
+      }
+    }
+
+    stage('') {
+      steps {
+        sh '''docker_redis=`docker ps -a | grep redisv1 | awk \'{print $1}\'`
+if [ -z $docker_redis ];then
+  docker run -it -d --rm --name redisv2 redis:v2
+else
+  docker stop redisv1 
+  docker run -it -d --rm --name redisv2 redis:v2
+fi'''
       }
     }
 
